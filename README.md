@@ -1,6 +1,8 @@
 # <span style="color:green">☁️ Weather Dashboard — Zynetic Coding Assignment
 
 A responsive weather dashboard built with **React + Vite**, styled using **Styled Components**, and powered by the **OpenWeatherMap API**. I created this  project as part of the Zynetic Frontend Assignment.
+---
+## You Can Find my site at : `https://samir54883.github.io/Zynetic-Coding-Assignment-/`
 
 ---
 
