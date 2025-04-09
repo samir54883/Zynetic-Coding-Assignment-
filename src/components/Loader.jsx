@@ -1,30 +1,32 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-// Create pulse animation using theme pulse colors
-const createPulse = (p1, p2) => keyframes`
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 20px ${p1};
-  }
-  20% {
-    transform: scale(1, 2.5);
-    box-shadow: 0 0 50px ${p2};
-  }
-  40% {
-    transform: scale(1);
-    box-shadow: 0 0 20px ${p1};
-  }
+// we are Creating a pulse animation using theme.js pulse colors (for pulse 1 and 2)
+const generateThemedPulse = (pulseColor1, pulseColor2) => keyframes`
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px ${pulseColor1};
+    }
+    20% {
+        transform: scale(1, 2.5);
+        box-shadow: 0 0 50px ${pulseColor2};
+    }
+    40% {
+        transform: scale(1);
+        box-shadow: 0 0 20px ${pulseColor1};
+    }
 `;
 
-const LoaderWrapper = styled.div`
+// and this is the Wrapper for the entire loader
+const PulseLoaderWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 3rem 0;
 `;
 
-const LoaderContainer = styled.div`
+// here you can see the Container that holds all the blocks together
+const PulseLoaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,34 +35,37 @@ const LoaderContainer = styled.div`
     position: relative;
 `;
 
-const LoaderInner = styled.div`
+// here you can see Inner wrapper for arranging blocks in a ring
+const PulseBlockRing = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
-const Block = styled.div`
+// here you can see one of the pulse blocks
+const PulseBlock = styled.div`
     display: inline-block;
     width: 10px;
     height: 10px;
     margin: 2px;
-    background-color: ${({ theme }) => theme.pulse2};
-    animation: ${({ theme }) => createPulse(theme.pulse1, theme.pulse2)} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    background-color: ${({ theme }) => theme.pulse2}; // static color for filled dot
+    animation: ${({ theme }) => generateThemedPulse(theme.pulse1, theme.pulse2)} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     animation-delay: ${({ delay }) => delay}s;
 `;
 
-const Loader = () => {
+// as you can see thi is the Main Loader component with all the components named unique to the page so as not to create a clash in naming later when a page expands
+const PulseLoader = () => {
     return (
-        <LoaderWrapper>
-            <LoaderContainer>
-                <LoaderInner>
-                    {Array.from({ length: 8 }).map((_, i) => (
-                        <Block key={i} delay={0.1 * (i + 1)} />
+        <PulseLoaderWrapper>
+            <PulseLoaderContainer>
+                <PulseBlockRing>
+                    {Array.from({ length: 8 }).map((_, index) => (
+                        <PulseBlock key={index} delay={0.1 * (index + 1)} />
                     ))}
-                </LoaderInner>
-            </LoaderContainer>
-        </LoaderWrapper>
+                </PulseBlockRing>
+            </PulseLoaderContainer>
+        </PulseLoaderWrapper>
     );
 };
 
-export default Loader;
+export default PulseLoader;

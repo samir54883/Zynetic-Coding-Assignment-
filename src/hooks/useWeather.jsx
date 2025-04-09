@@ -15,7 +15,7 @@ export const useWeather = () => {
         setForecastData([]);
 
         try {
-            // Fetch current weather
+            // here we are  Fetching current weather
             const response = await fetch(
                 `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
             );
@@ -29,7 +29,7 @@ export const useWeather = () => {
             const data = await response.json();
             setWeatherData(data);
 
-            // Fetch 5-day forecast
+            //here we are Fetching 5-day forecast
             const forecastRes = await fetch(
                 `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
             );
@@ -47,7 +47,7 @@ export const useWeather = () => {
             setForecastData(dailyForecast);
         } catch (err) {
             if (err.name === 'TypeError') {
-                setError('Network error. Please check your internet connection.');
+                setError('Network error.Take a look at your internet connection.');
             } else {
                 setError(err.message || 'Unexpected error occurred.');
             }
@@ -55,17 +55,17 @@ export const useWeather = () => {
             setLoading(false);
         }
     };
-
+// detailed error handling code for better catching the errors
     const handleHttpError = (status, message) => {
         switch (status) {
             case 401:
-                setError('Invalid API key. Please check your credentials.');
+                setError('Invalid API key. Please check your credetials.');
                 break;
             case 404:
-                setError('City not found. Please enter a valid city.');
+                setError('City not found. enter a valid city.');
                 break;
             case 429:
-                setError('Rate limit exceeded. Please try again later.');
+                setError('Rate limit exceeded. try again later.');
                 break;
             case 500:
             case 502:

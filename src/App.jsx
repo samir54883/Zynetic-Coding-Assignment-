@@ -11,8 +11,8 @@ import DarkCloud from './assets/DARK-CLOUD.png';
 
 import { useWeather } from './hooks/useWeather';
 import { lightTheme, darkTheme } from './styles/theme';
-
-const GlobalStyle = createGlobalStyle`
+// I have tired to keep names as "easy to infer knowledge from", as possible, the names make perfect sense!
+const AppGlobalStyle = createGlobalStyle`
     @font-face {
         font-family: 'TAN-NIMBUS';
         src: url('/src/assets/TAN-NIMBUS.otf') format('opentype');
@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
+        margin-bottom: 1rem;
         background-color: ${({ theme }) => theme.body};
         color: ${({ theme }) => theme.text};
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const HistoryList = styled.ul`
+const SearchHistoryList = styled.ul`
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -39,7 +40,7 @@ const HistoryList = styled.ul`
     padding: 0;
     margin-top: 1rem;
 `;
-const GridBackground = styled.div`
+const WeatherGridBackground = styled.div`
     position: absolute;
     inset: 0;
     z-index: -10;
@@ -63,7 +64,7 @@ const GridBackground = styled.div`
     }
 `;
 
-const HistoryItem = styled.li`
+const SearchHistoryItem = styled.li`
     background: ${({ theme }) => theme.card};
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -74,24 +75,37 @@ const HistoryItem = styled.li`
     }
 `;
 
-const Container = styled.div`
+const AppLayoutContainer = styled.div`
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
+
+    @media (max-width: 480px) {
+        padding: 0.5rem;
+    }
 `;
 
-const Title = styled.h1`
+const DashboardHeading = styled.h1`
     text-align: center;
     margin-top: 1.5rem;
     font-family: 'TAN-NIMBUS', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.2rem;
+    font-size: 2rem;
+
+    @media (max-width: 480px) {
+        font-size: 1.5rem;
+        img {
+            width: 30px;
+        }
+    }
 `;
 
 
-const CardsWrapper = styled.div`
+
+const ForecastDisplayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -101,6 +115,8 @@ const CardsWrapper = styled.div`
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
+      flex-wrap: wrap; /* 🔥 Add this */
+
   }
 `;
 
@@ -144,17 +160,17 @@ function App() {
 
     return (
         <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-            <GlobalStyle />
-            <GridBackground /> {/* ← Background Layer */}
-            <Container>
-                <Title>
+            <AppGlobalStyle />
+            <WeatherGridBackground /> {/* ← Background Layer */}
+            <AppLayoutContainer>
+                <DashboardHeading>
                     <img
                         src={theme === 'light' ? LightCloud : DarkCloud}
                         alt="Cloud Icon"
                         style={{ width: '40px', verticalAlign: 'middle', marginRight: '0.5rem' }}
                     />
                     Weather Dashboard
-                </Title>
+                </DashboardHeading>
 
                 <SearchBar
                     onSearch={handleSearch}
@@ -165,26 +181,26 @@ function App() {
                 />
 
                 {history.length > 0 && (
-                    <HistoryList>
+                    <SearchHistoryList>
                         {history.map((city, index) => (
-                            <HistoryItem key={index} onClick={() => handleSearch(city)}>
+                            <SearchHistoryItem key={index} onClick={() => handleSearch(city)}>
                                 {formatCityName(city)}
-                            </HistoryItem>
+                            </SearchHistoryItem>
                         ))}
 
-                    </HistoryList>
+                    </SearchHistoryList>
                 )}
 
                 {loading && <Loader />}
                 {error && <ErrorMessage message={error} />}
 
                 {(weatherData || forecastData.length > 0) && (
-                    <CardsWrapper>
+                    <ForecastDisplayWrapper>
                         {weatherData && <WeatherCard data={weatherData} />}
                         {forecastData.length > 0 && <ForecastCard forecast={forecastData} />}
-                    </CardsWrapper>
+                    </ForecastDisplayWrapper>
                 )}
-            </Container>
+            </AppLayoutContainer>
         </ThemeProvider>
     );
 }

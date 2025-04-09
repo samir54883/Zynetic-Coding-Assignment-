@@ -9,6 +9,7 @@ const Form = styled.form`
     flex-wrap: wrap;
 `;
 
+
 const Input = styled.input`
     width: 250px;
     height: 40px;
@@ -58,7 +59,6 @@ const Button = styled.button`
     }
 `;
 
-// 🌙 Theme Toggle Switch Styles
 const Switch = styled.label`
   font-size: 17px;
   position: relative;
@@ -85,6 +85,7 @@ const Slider = styled.span`
   background-color: rgba(70,53,177,1);
   transition: 0.4s;
   border-radius: 30px;
+    
   overflow: hidden;
 
   &::before {
@@ -112,6 +113,7 @@ const Slider = styled.span`
 const Spinner = styled.div`
   width: 24px;
   height: 24px;
+    
   display: grid;
   border-radius: 50%;
   -webkit-mask: radial-gradient(farthest-side, #0000 40%, rgba(255,255,255,1) 41%);
@@ -186,6 +188,8 @@ const Cloud = styled.svg`
   }
 `;
 
+
+
 const SearchBar = ({ onSearch, onRefresh, lastCity, onToggleTheme, themeMode }) => {
     const [city, setCity] = useState('');
 
@@ -212,13 +216,14 @@ const SearchBar = ({ onSearch, onRefresh, lastCity, onToggleTheme, themeMode }) 
                 </Button>
             )}
 
-            {/* 🌙 Custom Toggle Switch */}
+            {/* Custom Toggle Switch designed to cretate a better front-end appearance  */}
             <Switch>
                 <Checkbox
                     type="checkbox"
                     checked={themeMode === 'light'}
                     onChange={onToggleTheme}
                 />
+
 
                 <Slider>
                     <Star className="star_1" />

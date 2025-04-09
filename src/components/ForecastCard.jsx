@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
+//  Outer container with glassmorphism effect for the forecast card that contains the 5 day data
+const ForecastCardContainer = styled.div`
     flex: 1;
     width: auto;
     padding: 1.35rem;
@@ -19,7 +20,8 @@ const Container = styled.div`
     color: ${({ theme }) => theme.text};
 `;
 
-const ForecastList = styled.div`
+// this is the Wrapper for multiple forecast items
+const ForecastItemsWrapper = styled.div`
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -28,17 +30,18 @@ const ForecastList = styled.div`
     gap: 0.75rem;
 `;
 
-const ForecastItem = styled.div`
+//  Individual forecast block with responsiveness to showcase my skills in coding different and popularly used front-end designs eg. hover scale
+const ForecastDayCard = styled.div`
     text-align: center;
     border: 2px solid ${({ theme }) => theme.glassBorder};
     width: 15%;
     border-radius: 12px;
     padding: 0.5rem;
     color: ${({ theme }) => theme.text};
-    transition: transform 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease;
 
     &:hover {
-        transform: scale(1.05); /* Slight scale on hover */
+        transform: scale(1.05);
     }
 
     @media (max-width: 768px) {
@@ -48,15 +51,19 @@ const ForecastItem = styled.div`
     @media (max-width: 480px) {
         width: 45%;
     }
+
+    @media (max-width: 380px) {
+        width: 100%;
+    }
 `;
 
 const ForecastCard = ({ forecast }) => {
     return (
-        <Container>
+        <ForecastCardContainer>
             <h3 style={{ textAlign: 'center' }}>5-Day Forecast</h3>
-            <ForecastList>
+            <ForecastItemsWrapper>
                 {forecast.map((item, index) => (
-                    <ForecastItem key={index}>
+                    <ForecastDayCard key={index}>
                         <h4>{new Date(item.dt_txt).toLocaleDateString()}</h4>
                         <img
                             src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
@@ -64,10 +71,10 @@ const ForecastCard = ({ forecast }) => {
                         />
                         <p>{item.main.temp}°C</p>
                         <p>{item.weather[0].main}</p>
-                    </ForecastItem>
+                    </ForecastDayCard>
                 ))}
-            </ForecastList>
-        </Container>
+            </ForecastItemsWrapper>
+        </ForecastCardContainer>
     );
 };
 
