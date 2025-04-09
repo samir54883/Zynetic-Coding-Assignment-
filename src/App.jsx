@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import TanNimbusFont from './assets/TAN-NIMBUS.otf'; // Adjust path as needed
 
 import SearchBar from './components/SearchBar';
 import WeatherCard from './components/WeatherCard';
@@ -15,7 +16,7 @@ import { lightTheme, darkTheme } from './styles/theme';
 const AppGlobalStyle = createGlobalStyle`
     @font-face {
         font-family: 'TAN-NIMBUS';
-        src: url('/src/assets/TAN-NIMBUS.otf') format('opentype');
+        src: url(${TanNimbusFont}) format('opentype');
         font-weight: normal;
         font-style: normal;
     }
