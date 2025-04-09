@@ -391,11 +391,23 @@ Error generating stack: `+e.message+`
     gap: 0.2rem;
     font-size: 2rem;
 
+    img {
+        width: 40px;
+        margin-right: 0.5rem;
+        transition: margin 0.3s ease;
+    }
+
     @media (max-width: 480px) {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+
         img {
             width: 30px;
         }
+    }
+
+    @media (max-width: 360px) {
+        font-size: 1rem;
+
     }
 `,Av=_t.div`
   display: flex;
